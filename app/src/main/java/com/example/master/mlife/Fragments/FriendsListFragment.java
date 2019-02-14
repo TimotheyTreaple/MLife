@@ -9,11 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.master.mlife.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class FriendsListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.friends_list_layout, container, false);
+        final View view = inflater.inflate(R.layout.friends_list_layout, container, false);
+
+        return view;
     }
+
 }

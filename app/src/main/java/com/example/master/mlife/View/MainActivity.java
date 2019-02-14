@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
 
     ListView mListUserTasks;
 
-    FragmentManager fragmentManager = getSupportFragmentManager();
+
 
     LinearLayout mMondayLayout;
     LinearLayout mTuesdayLayout;
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity
 
     Fragment fragment = null;
     Class fragmentClass = null;
+    FragmentManager fragmentManager = getSupportFragmentManager();
 
     String stEmail;
     String stUsername;
