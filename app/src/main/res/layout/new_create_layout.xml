@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/common_google_signin_btn_text_dark_pressed">
+
 
     <RadioButton
         android:id="@+id/public_radio_button"
@@ -16,7 +17,7 @@
         android:text="Public"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        app:layout_constraintTop_toBottomOf="@+id/et_title" />
 
     <RadioButton
         android:id="@+id/private_radio_button"
@@ -25,13 +26,14 @@
         android:layout_marginStart="59dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="276dp"
+        android:checked="true"
         android:text="Private"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/public_radio_button" />
 
     <Button
-        android:id="@+id/next_button"
+        android:id="@+id/bt_next"
         android:layout_width="188dp"
         android:layout_height="54dp"
         android:layout_marginStart="111dp"
@@ -44,7 +46,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/et_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -53,7 +55,7 @@
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/next_button"
+        app:layout_constraintBottom_toTopOf="@+id/bt_next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.28"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +71,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Enter title"
-        app:layout_constraintBottom_toTopOf="@+id/editText2"
+        app:layout_constraintBottom_toTopOf="@+id/et_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.152"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +79,7 @@
         app:layout_constraintVertical_bias="0.705" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/et_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="59dp"
@@ -98,7 +100,7 @@
         android:layout_marginEnd="293dp"
         android:layout_marginBottom="22dp"
         android:text="Enter description "
-        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintBottom_toTopOf="@+id/et_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
