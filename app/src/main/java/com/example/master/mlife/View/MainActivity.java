@@ -4,7 +4,9 @@ package com.example.master.mlife.View;
 import android.content.Intent;
 import android.os.Bundle;
 
+import static android.app.PendingIntent.getActivity;
 import static android.support.constraint.Constraints.TAG;
+import static com.example.master.mlife.R.*;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -29,8 +31,10 @@ import com.example.master.mlife.Fragments.CalendarFragment;
 import com.example.master.mlife.Fragments.DayScheduleFragment;
 import com.example.master.mlife.Fragments.FriendsListFragment;
 import com.example.master.mlife.Fragments.DaysListFragment;
+import com.example.master.mlife.Fragments.GetTimeFragment;
 import com.example.master.mlife.Fragments.MyProfileFragment;
 import com.example.master.mlife.Fragments.NewCreateFragment;
+import com.example.master.mlife.Fragments.ToolbarBackButtonFragment;
 import com.example.master.mlife.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -56,8 +60,10 @@ public class MainActivity extends AppCompatActivity
     LinearLayout mSaturdayLayout;
     LinearLayout mSundayLayout;
 
+
     Fragment fragment = null;
-    Class fragmentClass = null;
+    Class fragmentLayoutClass = null;
+    Class fragmentToolbarClass = null;
     FragmentManager fragmentManager = getSupportFragmentManager();
 
     FirebaseFirestore Firestore = FirebaseFirestore.getInstance();
@@ -72,57 +78,59 @@ public class MainActivity extends AppCompatActivity
     TextView tvEmail;
     TextView tvUsername;
 
-
     DrawerLayout dlDrawer;
+
+    int key;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MultiDex.install(this);
         setContentView(R.layout.activity_main);
-        fragmentClass = DaysListFragment.class;
+        fragmentLayoutClass = DaysListFragment.class;
         replaceFragment();
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(id.toolbar_drawer);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentClass = NewCreateFragment.class;
-
-                addFragment(fragmentClass);
-                setTitle("New Create");
-                fragmentClass=null;
+                fragmentLayoutClass = NewCreateFragment.class;
+                addToBackStackFragment(fragmentLayoutClass);
+                fragmentToolbarClass = ToolbarBackButtonFragment.class;
+                addToBackStackToolbar(fragmentToolbarClass);
+                fragmentLayoutClass = null;
+                key = 1;
             }
         });
 
-        dlDrawer = findViewById(R.id.drawer_layout);
+        dlDrawer = findViewById(id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, dlDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, dlDrawer, toolbar, string.navigation_drawer_open, string.navigation_drawer_close);
         dlDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
         // Read from the database
 
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        tvEmail = findViewById(R.id.tv_email);
-        tvUsername = findViewById(R.id.tv_nickname);
+        tvEmail = findViewById(id.tv_email);
+        tvUsername = findViewById(id.tv_nickname);
 
+        mMondayLayout = findViewById(id.monday_button_go);
+        mTuesdayLayout = findViewById(id.tuesday_button_go);
+        mWednesdayLayout = findViewById(id.wednesday_button_go);
+        mThursdayLayout = findViewById(id.thursday_button_go);
+        mFridayLayout = findViewById(id.friday_button_go);
+        mSaturdayLayout = findViewById(id.saturday_button_go);
+        mSundayLayout = findViewById(id.sunday_button_go);
 
-        mMondayLayout = findViewById(R.id.monday_button_go);
-        mTuesdayLayout = findViewById(R.id.tuesday_button_go);
-        mWednesdayLayout = findViewById(R.id.wednesday_button_go);
-        mThursdayLayout = findViewById(R.id.thursday_button_go);
-        mFridayLayout = findViewById(R.id.friday_button_go);
-        mSaturdayLayout = findViewById(R.id.saturday_button_go);
-        mSundayLayout = findViewById(R.id.sunday_button_go);
-
-        mListUserTasks = (ListView) findViewById(R.id.discr_for_task);
+        mListUserTasks = findViewById(id.discr_for_task);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -138,29 +146,31 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        stEmail = mUser.getEmail();
-        stUsername = mUser.getDisplayName();
-        dlDrawer.addDrawerListener(getDrawerListener());
+        if (mUser != null) {
+            stEmail = mUser.getEmail();
+            stUsername = mUser.getDisplayName();
+            dlDrawer.addDrawerListener(getDrawerListener());
 
-        Firestore.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task <QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
+            Firestore.collection("users")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task <QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                }
+                            } else {
+                                Log.w(TAG, "Error getting documents.", task.getException());
                             }
-                        } else {
-                            Log.w(TAG, "Error getting documents.", task.getException());
                         }
-                    }
-                });
+                    });
+        }
     }
 
     private DrawerLayout.DrawerListener getDrawerListener() {
 
-        return new ActionBarDrawerToggle(MainActivity.this, dlDrawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+        return new ActionBarDrawerToggle(MainActivity.this, dlDrawer, string.navigation_drawer_open, string.navigation_drawer_close) {
             public void onDraverClosed(View view) {
                 super.onDrawerClosed(view);
 
@@ -170,25 +180,31 @@ public class MainActivity extends AppCompatActivity
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
 
-                tvEmail = drawerView.findViewById(R.id.tv_email);
-                tvUsername = drawerView.findViewById(R.id.tv_nickname);
-                tvEmail.setText(mUser.getEmail());
-                tvUsername.setText(mUser.getDisplayName());
+                tvEmail = drawerView.findViewById(id.tv_email);
+                tvUsername = drawerView.findViewById(id.tv_nickname);
+                tvEmail.setText(stEmail);
+                tvUsername.setText(stUsername);
             }
         };
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        Fragment f = getSupportFragmentManager().findFragmentById(id.fragment_layout);
+        DrawerLayout drawer = findViewById(id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (f instanceof NewCreateFragment) {
+            fragmentManager.popBackStack();
+            fragmentManager.popBackStack();
+        } else if (f instanceof GetTimeFragment) {
+            fragmentManager.popBackStack();
         } else {
             super.onBackPressed();
         }
     }
 
-    @Override
+        @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -204,13 +220,13 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.item_calendar) {
-            fragmentClass = CalendarFragment.class;
+            fragmentLayoutClass = CalendarFragment.class;
         } else if (id == R.id.item_calendar_list) {
-            fragmentClass = DaysListFragment.class;
+            fragmentLayoutClass = DaysListFragment.class;
         }
 
         try {
-            fragment = (Fragment) fragmentClass.newInstance();
+            fragment = (Fragment) fragmentLayoutClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -237,16 +253,20 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_my_profile) {
-            fragmentClass = MyProfileFragment.class;
+            fragmentLayoutClass = MyProfileFragment.class;
         } else if (id == R.id.nav_main_schedule) {
-            fragmentClass = DaysListFragment.class;
+            fragmentLayoutClass = DaysListFragment.class;
         } else if (id == R.id.nav_friends_list) {
-            fragmentClass = FriendsListFragment.class;
+            fragmentLayoutClass = FriendsListFragment.class;
         } else if (id == R.id.nav_day_schedule) {
-            fragmentClass = DayScheduleFragment.class;
+            fragmentLayoutClass = DayScheduleFragment.class;
         } else if (id == R.id.nav_sign_out) {
 
             mAuth.signOut();
+            stUsername = null;
+            stEmail = null;
+            mUser = null;
+            dlDrawer.closeDrawers();
             Intent intent = new Intent(this, RegistrationMain.class);
             startActivityForResult(intent, 1);
             return true;
@@ -268,31 +288,52 @@ public class MainActivity extends AppCompatActivity
 
     public void replaceFragment() {
         try {
-            fragment = (Fragment) fragmentClass.newInstance();
+            fragment = (Fragment) fragmentLayoutClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // Вставляем фрагмент, заменяя текущий фрагмент
-        fragmentManager.beginTransaction().replace(R.id.fragment_layout, fragment).commit();
+        fragmentManager.beginTransaction().replace(id.fragment_layout, fragment).commit();
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
 
     }
 
-    public void addFragment(Class fragmentClass) {
+
+    public void addToBackStackToolbar(Class tbFragmentClass) {
         try {
-            fragment = (Fragment) fragmentClass.newInstance();
+            fragment = (Fragment) tbFragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        // Вставляем фрагмент, заменяя текущий фрагмент
+        fragmentManager
+                .beginTransaction()
+                .add(id.toolbar_fragment, fragment, tbFragmentClass.getSimpleName())
+                .addToBackStack(tbFragmentClass.getSimpleName())
+                .commit();
+    }
+
+    public void addToBackStackFragment(Class afFragmentClass) {
+        try {
+            fragment = (Fragment) afFragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // Вставляем фрагмент, заменяя текущий фрагмент
-        fragmentManager.beginTransaction().add(R.id.fragment_layout, fragment).addToBackStack(null).commit();
+        fragmentManager
+                .beginTransaction()
+                .add(id.fragment_layout, fragment, afFragmentClass.getSimpleName())
+                .addToBackStack(afFragmentClass.getSimpleName())
+                .commit();
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
 
 
@@ -302,37 +343,37 @@ public class MainActivity extends AppCompatActivity
     public void onDayLayoutClick(View view) {
         String nameday = null;
         switch (view.getId()) {
-            case R.id.monday_button_go:
-                fragmentClass = DayScheduleFragment.class;
+            case id.monday_button_go:
+                fragmentLayoutClass = DayScheduleFragment.class;
                 nameday = "Monday";
                 break;
-            case R.id.tuesday_button_go:
-                fragmentClass = DayScheduleFragment.class;
+            case id.tuesday_button_go:
+                fragmentLayoutClass = DayScheduleFragment.class;
                 nameday = "Tuesday";
                 break;
-            case R.id.wednesday_button_go:
-                fragmentClass = DayScheduleFragment.class;
+            case id.wednesday_button_go:
+                fragmentLayoutClass = DayScheduleFragment.class;
                 nameday = "Wednesday";
                 break;
-            case R.id.thursday_button_go:
-                fragmentClass = DayScheduleFragment.class;
+            case id.thursday_button_go:
+                fragmentLayoutClass = DayScheduleFragment.class;
                 nameday = "Thursday";
                 break;
-            case R.id.friday_button_go:
-                fragmentClass = DayScheduleFragment.class;
+            case id.friday_button_go:
+                fragmentLayoutClass = DayScheduleFragment.class;
                 nameday = "Friday";
                 break;
-            case R.id.saturday_button_go:
-                fragmentClass = DayScheduleFragment.class;
+            case id.saturday_button_go:
+                fragmentLayoutClass = DayScheduleFragment.class;
                 nameday = "Saturday";
                 break;
-            case R.id.sunday_button_go:
-                fragmentClass = DayScheduleFragment.class;
+            case id.sunday_button_go:
+                fragmentLayoutClass = DayScheduleFragment.class;
                 nameday = "Sunday";
                 break;
         }
 
-        replaceFragment();
+        addToBackStackFragment(fragmentLayoutClass);
         setTitle(nameday);
     }
 
