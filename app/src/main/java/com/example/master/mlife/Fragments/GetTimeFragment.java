@@ -17,6 +17,7 @@ import com.example.master.mlife.R;
 import com.example.master.mlife.View.MainActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -34,9 +35,12 @@ public class GetTimeFragment extends Fragment {
     HashMap shadule = new HashMap();
     String description;
     Intent intent;
+    Intent intentDate;
+    Intent intent5;
     String title;
     FirebaseFirestore firestore=FirebaseFirestore.getInstance();
-    String name="Timothey";
+    String username;
+    String finalDate;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.get_time_fragment, container, false);
@@ -44,7 +48,16 @@ public class GetTimeFragment extends Fragment {
 
         btComplete = view.findViewById(R.id.bt_to_complete);
         intent = getActivity().getIntent();
+        intentDate = getActivity().getIntent();
+        intent5 = getActivity().getIntent();
         setListeners();
+        username = intent5.getStringExtra("nameUser");
+        finalDate=intentDate.getStringExtra("finaldate");
+        Bundle b = this.getArguments();
+        if(b != null){
+            int i = b.getInt("nameUser");
+            String s =b.getString("finaldate");
+        }
 
 
 
@@ -56,13 +69,13 @@ public class GetTimeFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                 Hour=timePicker.getCurrentHour();
-                 Minute=timePicker.getCurrentMinute();
+                Hour=timePicker.getCurrentHour();
+                Minute=timePicker.getCurrentMinute();
                 FragmentManager fm = Objects.requireNonNull(getActivity()).getSupportFragmentManager();
                 for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
                     fm.popBackStack();
                 }
-               addValue();
+                addValue();
 
 
 
@@ -89,19 +102,10 @@ public class GetTimeFragment extends Fragment {
         event.put("Hour", Hour);
         event.put("Minute", Minute);
         event.put("Title", title);
-        firestore.collection("Shadule").document(name)
-                .set(event)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
+        event.put("Date",finalDate);
+        firestore.collection("Shadule").document(username).collection(finalDate)
+                .add(event);
+
     }
 }
+

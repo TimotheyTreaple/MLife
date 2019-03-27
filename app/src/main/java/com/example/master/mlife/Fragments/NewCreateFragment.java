@@ -33,7 +33,7 @@ public class NewCreateFragment extends Fragment {
         final View view = inflater.inflate(R.layout.new_create_layout, container, false);
         btNext = view.findViewById(R.id.bt_next);
         eventName=view.findViewById(R.id.et_title);
-        rgForPrivacy=view.findViewById(R.id.radioGroupForPrivacy);
+        rgForPrivacy=view.findViewById(R.id.radioGroup2);
         descriptionOfEvent=view.findViewById(R.id.et_description);
 
 
@@ -51,6 +51,7 @@ public class NewCreateFragment extends Fragment {
                 rgForPrivacy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        // в GetTimeFragment результат
                         if (checkedId == R.id.rb_public) {
                             privacy=1;
                         } else  if (checkedId == R.id.rb_private) {
@@ -61,7 +62,9 @@ public class NewCreateFragment extends Fragment {
                 });
 
                 description=descriptionOfEvent .getText().toString();
+                // в GetTimeFragment
                 title=eventName.getText().toString();
+                // в GetTimeFragment
                 intent.putExtra("privacy",privacy);
                 intent.putExtra("description",description);
                 intent.putExtra("title",title);
@@ -74,3 +77,4 @@ public class NewCreateFragment extends Fragment {
 
 
 }
+
