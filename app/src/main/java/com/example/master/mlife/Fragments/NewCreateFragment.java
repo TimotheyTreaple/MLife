@@ -8,11 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.master.mlife.R;
-import com.example.master.mlife.View.MainActivity;
-import com.example.master.mlife.View.RegistrationMain;
+import com.example.master.mlife.View.NewCreateActivity;
 
 import java.util.Objects;
 
@@ -22,10 +23,32 @@ public class NewCreateFragment extends Fragment {
     String title = null;
     String description = null;
     Button btNext;
+    EditText eventName;
+    EditText descriptionOfEvent;
+    RadioGroup rgForPrivacy;
+    int privacy =1;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.new_create_layout, container, false);
-        btNext = view.findViewById(R.id.bt_next);
+        btNext = view.findViewById(R.id.bt_next_2);
+        eventName=view.findViewById(R.id.et_title);
+        rgForPrivacy=view.findViewById(R.id.radioGroup2);
+        descriptionOfEvent=view.findViewById(R.id.et_description);
+
+        rgForPrivacy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // в GetTimeFragment результат
+                if (checkedId == R.id.rb_public) {
+                    privacy=1;
+                    System.out.println(privacy);
+                } else  if (checkedId == R.id.rb_private) {
+                    privacy=-1;
+                    System.out.println(privacy);
+                }
+
+            }
+        });
 
         setListeners();
 
@@ -38,8 +61,17 @@ public class NewCreateFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                ((MainActivity) Objects.requireNonNull(getActivity())).addFragment(GetTimeFragment.class);
 
+                description=descriptionOfEvent.getText().toString();
+                title=eventName.getText().toString();
+
+                getActivity().getIntent().putExtra("privacy",privacy);
+                getActivity().getIntent().putExtra("title",title);
+                getActivity().getIntent().putExtra("description",description);
+
+
+
+                ((NewCreateActivity) Objects.requireNonNull(getActivity())).addToBackStackFragment(GetTimeFragment.class);
 
             }
         });
@@ -47,4 +79,6 @@ public class NewCreateFragment extends Fragment {
     }
 
 
+
 }
+

@@ -7,11 +7,10 @@
         android:id="@+id/item_calendar"
         android:icon="@drawable/ic_baseline_calendar"
         android:title="Calendar"
-        app:showAsAction="always"
-        ></item>
+        app:showAsAction="always" />
     <item
         android:id="@+id/item_calendar_list"
         android:icon="@drawable/ic_baseline_calendar_view_day"
         android:title="Main Schedule"
-        app:showAsAction="always"></item>
+        app:showAsAction="always" />
 </menu>
