@@ -1,6 +1,5 @@
 package com.example.master.mlife.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,10 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.master.mlife.R;
-import com.example.master.mlife.View.MainActivity;
+import com.example.master.mlife.View.NewCreateActivity;
 
 import java.util.Objects;
 
@@ -26,16 +26,29 @@ public class NewCreateFragment extends Fragment {
     EditText eventName;
     EditText descriptionOfEvent;
     RadioGroup rgForPrivacy;
-    int privacy;
-    Intent intent=new Intent();
+    int privacy =1;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.new_create_layout, container, false);
-        btNext = view.findViewById(R.id.bt_next);
+        btNext = view.findViewById(R.id.bt_next_2);
         eventName=view.findViewById(R.id.et_title);
         rgForPrivacy=view.findViewById(R.id.radioGroup2);
         descriptionOfEvent=view.findViewById(R.id.et_description);
 
+        rgForPrivacy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                // в GetTimeFragment результат
+                if (checkedId == R.id.rb_public) {
+                    privacy=1;
+                    System.out.println(privacy);
+                } else  if (checkedId == R.id.rb_private) {
+                    privacy=-1;
+                    System.out.println(privacy);
+                }
+
+            }
+        });
 
         setListeners();
 
@@ -48,32 +61,23 @@ public class NewCreateFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                rgForPrivacy.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(RadioGroup group, int checkedId) {
-                        // в GetTimeFragment результат
-                        if (checkedId == R.id.rb_public) {
-                            privacy=1;
-                        } else  if (checkedId == R.id.rb_private) {
-                            privacy=-1;
-                        }
 
-                    }
-                });
-
-                description=descriptionOfEvent .getText().toString();
-                // в GetTimeFragment
+                description=descriptionOfEvent.getText().toString();
                 title=eventName.getText().toString();
-                // в GetTimeFragment
-                intent.putExtra("privacy",privacy);
-                intent.putExtra("description",description);
-                intent.putExtra("title",title);
-                ((MainActivity) Objects.requireNonNull(getActivity())).addToBackStackFragment(GetTimeFragment.class);
+
+                getActivity().getIntent().putExtra("privacy",privacy);
+                getActivity().getIntent().putExtra("title",title);
+                getActivity().getIntent().putExtra("description",description);
+
+
+
+                ((NewCreateActivity) Objects.requireNonNull(getActivity())).addToBackStackFragment(GetTimeFragment.class);
 
             }
         });
 
     }
+
 
 
 }

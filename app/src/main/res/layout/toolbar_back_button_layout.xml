@@ -11,6 +11,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:buttonGravity="top|bottom"
         app:title="Create New Point"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"

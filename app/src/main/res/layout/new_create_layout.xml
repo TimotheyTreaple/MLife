@@ -44,13 +44,13 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/bt_next"
+        android:id="@+id/bt_next_2"
         android:layout_width="188dp"
         android:layout_height="54dp"
         android:layout_marginStart="111dp"
         android:layout_marginEnd="112dp"
         android:layout_marginBottom="22dp"
-        android:onClick="onDayLayoutClick"
+        android:onClick="onClickNewCreate"
         android:text="Next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:background="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/bt_next"
+        app:layout_constraintBottom_toTopOf="@+id/bt_next_2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,6 +104,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="8dp"
+        android:onClick="onCheckedChanged"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.201"
         app:layout_constraintStart_toStartOf="parent"

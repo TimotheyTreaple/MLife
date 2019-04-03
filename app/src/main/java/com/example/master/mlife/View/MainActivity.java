@@ -28,15 +28,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.master.mlife.Fragments.CalendarFragment;
-import com.example.master.mlife.Fragments.ChangeDataFragment;
 import com.example.master.mlife.Fragments.DayScheduleFragment;
 import com.example.master.mlife.Fragments.FriendsListFragment;
 import com.example.master.mlife.Fragments.DaysListFragment;
-import com.example.master.mlife.Fragments.GetTimeFragment;
 import com.example.master.mlife.Fragments.MyProfileFragment;
-import com.example.master.mlife.Fragments.NewCreateFragment;
-import com.example.master.mlife.Fragments.ToolbarBackButtonFragment;
-import com.example.master.mlife.Fragments.ToolbarDrawerFragment;
 import com.example.master.mlife.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -65,7 +60,6 @@ public class MainActivity extends AppCompatActivity
 
     Fragment fragment = null;
     Class fragmentLayoutClass = null;
-    Class fragmentToolbarClass = null;
     FragmentManager fragmentManager = getSupportFragmentManager();
 
     FirebaseFirestore Firestore = FirebaseFirestore.getInstance();
@@ -99,12 +93,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentLayoutClass = ChangeDataFragment.class;
-                addToBackStackFragment(fragmentLayoutClass);
-                fragmentToolbarClass = ToolbarBackButtonFragment.class;
-                addToBackStackToolbar(fragmentToolbarClass);
-                fragmentLayoutClass = null;
-
+                Intent intent = new Intent(MainActivity.this, NewCreateActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -196,27 +186,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        Fragment f = getSupportFragmentManager().findFragmentById(id.fragment_layout);
-        Fragment t = getSupportFragmentManager().findFragmentById(id.toolbar_container);
-
-        if(t instanceof ToolbarBackButtonFragment){
-            if (f instanceof ChangeDataFragment) {
-                fragmentManager.popBackStack();
-                fragmentManager.popBackStack();
-            } else if (f instanceof GetTimeFragment) {
-                fragmentManager.popBackStack();
-            } else if (f instanceof NewCreateFragment){
                 super.onBackPressed();
-            }
-        }else if(t instanceof ToolbarDrawerFragment) {
-            DrawerLayout drawer = findViewById(id.drawer_layout);
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START);
-            }
-        } else {
-            System.out.println("Error!");
-        }
-
     }
 
         @Override
@@ -317,20 +287,6 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
-    public void addToBackStackToolbar(Class tbFragmentClass) {
-        try {
-            fragment = (Fragment) tbFragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // Вставляем фрагмент, заменяя текущий фрагмент
-        fragmentManager
-                .beginTransaction()
-                .add(id.toolbar_container, fragment, tbFragmentClass.getSimpleName())
-                .addToBackStack(tbFragmentClass.getSimpleName())
-                .commit();
-    }
 
     public void addToBackStackFragment(Class afFragmentClass) {
         try {
