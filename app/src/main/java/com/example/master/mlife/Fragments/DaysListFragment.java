@@ -25,6 +25,8 @@ public class DaysListFragment extends Fragment {
         view = inflater.inflate(R.layout.days_list_layout, container, false);
 
 
+
         return view;
     }
+
 }

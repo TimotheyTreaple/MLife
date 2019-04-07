@@ -1,5 +1,6 @@
 package com.example.master.mlife.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -73,6 +74,8 @@ public class RegistrationFragment extends Fragment {
 
     public void onClickGetUsname() {
         String username = etUsername.getText().toString();
+        Intent intent5=new Intent(getActivity(), GetTimeFragment.class);
+        intent5.putExtra("nameUser",username);
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(username)
@@ -83,9 +86,7 @@ public class RegistrationFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task <Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getContext(), "Информация обновлена!", Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(getContext(), "Провал!", Toast.LENGTH_LONG).show();
 
                         }
                     }
@@ -95,20 +96,10 @@ public class RegistrationFragment extends Fragment {
         user.put("Username", etUsername.getText().toString());
 
 // Add a new document with a generated ID
-        firestore.collection("users")
-                .add(user)
-                .addOnSuccessListener(new OnSuccessListener <DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        firestore.collection("users").document(etUsername.getText().toString())
+                .set(user);
+        firestore.collection("Shadule").document(etUsername.getText().toString())
+                .set(user);
     }
 
     private void updateUI(FirebaseUser user) {

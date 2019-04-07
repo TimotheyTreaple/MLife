@@ -7,17 +7,52 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TimePicker;
 
 import com.example.master.mlife.R;
+import com.example.master.mlife.View.NewCreateActivity;
 
 public class GetTimeFragment extends Fragment {
+    TimePicker timePicker;
+    Button btComplete;
+    int hour;
+    int minute;
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.get_time_fragment, container, false);
+        timePicker = view.findViewById(R.id.timePicker);
 
-
+        btComplete = view.findViewById(R.id.bt_to_complete);
+        setListeners();
 
         return view;
     }
 
+
+
+    public void setListeners() {
+        btComplete.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                hour = timePicker.getCurrentHour();
+                minute = timePicker.getCurrentMinute();
+                String fullTime=(minute+":"+hour);
+
+                getActivity().getIntent().putExtra("time",fullTime);
+
+                NewCreateActivity newCreateActivity = (NewCreateActivity) getActivity();
+                assert newCreateActivity != null;
+                newCreateActivity.getInformation();
+
+            }
+        });
+
+    }
+
+
+
+
 }
+
