@@ -84,6 +84,9 @@ public class MainActivity extends AppCompatActivity
     Date currentDate;
     String date;
 
+    Fragment f ;
+
+
     private static long back_pressed;
 
 
@@ -117,7 +120,6 @@ public class MainActivity extends AppCompatActivity
         dlDrawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Read from the database
 
 
         NavigationView navigationView = findViewById(id.nav_view);
@@ -199,9 +201,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_layout);
-
-        if (f instanceof DayScheduleFragment || f instanceof MyProfileFragment || f instanceof FriendsListFragment|| f instanceof CalendarFragment) {
+        f = getSupportFragmentManager().findFragmentById(R.id.fragment_layout);
+        if (f instanceof DayScheduleFragment || f instanceof MyProfileFragment || f instanceof FriendsListFragment || f instanceof CalendarFragment) {
             setTitle(date);
             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentLayoutClass = DaysListFragment.class;
@@ -220,7 +221,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.main, menu);
 
         return true;
@@ -232,29 +233,22 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
+        f = getSupportFragmentManager().findFragmentById(R.id.fragment_layout);
         if (id == R.id.item_calendar) {
             fragmentLayoutClass = CalendarFragment.class;
+            setTitle(item.getTitle());
         } else if (id == R.id.item_calendar_list) {
-            fragmentLayoutClass = DaysListFragment.class;
+            if (f instanceof DaysListFragment) {
+                return super.onOptionsItemSelected(item);
+            } else {
+                fragmentLayoutClass = DaysListFragment.class;
+                setTitle(date);
+            }
         }
 
-        try {
-            fragment = (Fragment) fragmentLayoutClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        // Вставляем фрагмент, заменяя текущий фрагмент
-        fragmentManager.beginTransaction().replace(R.id.fragment_layout, fragment).commit();
-        // Выделяем выбранный пункт меню в шторке
+        addToBackStackFragment(fragmentLayoutClass);
         item.setChecked(true);
-        // Выводим выбранный пункт в заголовке
-        setTitle(item.getTitle());
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        //noinspection SimplifiableIfStatemen
 
         return super.onOptionsItemSelected(item);
     }
@@ -263,9 +257,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        f = getSupportFragmentManager().findFragmentById(R.id.fragment_layout);
         if (id == R.id.nav_my_profile) {
             fragmentLayoutClass = MyProfileFragment.class;
         } else if (id == R.id.nav_main_schedule) {
@@ -286,16 +279,19 @@ public class MainActivity extends AppCompatActivity
         }
         // Выделяем выбранный пункт меню в шторке
         item.setChecked(true);
-        // Выводим выбранный пункт в заголовке
-        setTitleDrawer(item);
 
-        Fragment f = getSupportFragmentManager().findFragmentById(R.id.fragment_layout);
-
-        if (f instanceof DaysListFragment) {
-            addToBackStackFragment(fragmentLayoutClass);
-        } else {
-            replaceFragment();
+        if(f.getClass() != fragmentLayoutClass){
+            if (f instanceof DaysListFragment) {
+                addToBackStackFragment(fragmentLayoutClass);
+            } else {
+                replaceFragment();
+            }
+            setTitleDrawer(item);
+        }else {
+            dlDrawer.closeDrawers();
         }
+
+
 
         return true;
     }
