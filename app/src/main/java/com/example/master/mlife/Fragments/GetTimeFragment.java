@@ -38,7 +38,7 @@ public class GetTimeFragment extends Fragment {
             public void onClick(View v) {
                 hour = timePicker.getCurrentHour();
                 minute = timePicker.getCurrentMinute();
-                String fullTime=(minute+":"+hour);
+                String fullTime=(hour+":"+minute);
 
                 getActivity().getIntent().putExtra("time",fullTime);
 

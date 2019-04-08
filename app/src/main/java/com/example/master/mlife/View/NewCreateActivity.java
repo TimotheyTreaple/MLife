@@ -36,7 +36,7 @@ public class NewCreateActivity extends AppCompatActivity {
     Intent intent = new Intent();
 
     String username;
-    String date = null;
+    String date ;
     String time = null;
     String title = null;
     String description = null;
@@ -130,7 +130,7 @@ public class NewCreateActivity extends AppCompatActivity {
 
         final String TAG ="1111111111111111" ;
 
-        firestore.collection("Shadule").document(username).collection("Shadule").document(date)
+        firestore.collection("Shadule").document(username).collection(date).document(title)
                 .set(event)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
 

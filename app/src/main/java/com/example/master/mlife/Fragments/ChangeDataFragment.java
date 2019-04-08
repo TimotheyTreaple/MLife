@@ -13,6 +13,8 @@ import android.widget.CalendarView;
 import com.example.master.mlife.R;
 import com.example.master.mlife.View.NewCreateActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class ChangeDataFragment extends Fragment {
@@ -34,9 +36,9 @@ public class ChangeDataFragment extends Fragment {
             @Override
             public void onSelectedDayChange(CalendarView view, int year,
                                             int month, int dayOfMonth) {
-                finalDate= String.valueOf(month + 1) +
-                        "-" + dayOfMonth + "-" + year +
-                        " ";
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                 String format = sdf.format(new Date(calendarView.getDate()));
+                 finalDate=format;
             }
         });
 
