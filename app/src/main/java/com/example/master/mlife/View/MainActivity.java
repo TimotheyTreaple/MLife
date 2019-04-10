@@ -1,6 +1,8 @@
 package com.example.master.mlife.View;
 
 
+import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -84,12 +86,15 @@ public class MainActivity extends AppCompatActivity
     Date currentDate;
     String date;
 
-    Fragment f ;
+    View drawerView;
+
+    Fragment f;
 
 
     private static long back_pressed;
 
 
+    @SuppressLint("CutPasteId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,9 +106,11 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         currentDate = Calendar.getInstance().getTime();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy");
         date = formatter.format(currentDate);
         setTitle(date);
+
+        drawerView = (View) findViewById(id.drawer_layout);
 
         FloatingActionButton fab = findViewById(id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +126,6 @@ public class MainActivity extends AppCompatActivity
                 this, dlDrawer, toolbar, string.navigation_drawer_open, string.navigation_drawer_close);
         dlDrawer.addDrawerListener(toggle);
         toggle.syncState();
-
 
 
         NavigationView navigationView = findViewById(id.nav_view);
@@ -139,6 +145,12 @@ public class MainActivity extends AppCompatActivity
 
         mListUserTasks = findViewById(id.discr_for_task);
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         mAuth = FirebaseAuth.getInstance();
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -148,14 +160,8 @@ public class MainActivity extends AppCompatActivity
             Intent iIntent = new Intent(MainActivity.this, RegistrationMain.class);
             startActivity(iIntent);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         if (mUser != null) {
-            stEmail = mUser.getEmail();
-            stUsername = mUser.getDisplayName();
+
             dlDrawer.addDrawerListener(getDrawerListener());
             Intent intent = new Intent();
             String nikName = stUsername;
@@ -188,12 +194,24 @@ public class MainActivity extends AppCompatActivity
             }
 
             public void onDrawerOpened(View drawerView) {
-
+                stEmail = mUser.getEmail();
+                stUsername = mUser.getDisplayName();
 
                 tvEmail = drawerView.findViewById(id.tv_email);
                 tvUsername = drawerView.findViewById(id.tv_nickname);
+
                 tvEmail.setText(stEmail);
                 tvUsername.setText(stUsername);
+                if(f instanceof MyProfileFragment){
+
+                }else if(f instanceof DaysListFragment){
+
+                }else if(f instanceof FriendsListFragment){
+
+                }else if(f instanceof DayScheduleFragment){
+
+                }
+
                 super.onDrawerOpened(drawerView);
             }
         };
@@ -210,18 +228,16 @@ public class MainActivity extends AppCompatActivity
 
         } else if (f instanceof DaysListFragment) {
             if (back_pressed + 2000 > System.currentTimeMillis()) {
-                super.onBackPressed();
+                this.finishAffinity();
             } else {
                 Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
             }
             back_pressed = System.currentTimeMillis();
         }
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.main, menu);
 
         return true;
@@ -280,17 +296,16 @@ public class MainActivity extends AppCompatActivity
         // Выделяем выбранный пункт меню в шторке
         item.setChecked(true);
 
-        if(f.getClass() != fragmentLayoutClass){
+        if (f.getClass() != fragmentLayoutClass) {
             if (f instanceof DaysListFragment) {
                 addToBackStackFragment(fragmentLayoutClass);
             } else {
                 replaceFragment();
             }
             setTitleDrawer(item);
-        }else {
+        } else {
             dlDrawer.closeDrawers();
         }
-
 
 
         return true;
@@ -298,8 +313,6 @@ public class MainActivity extends AppCompatActivity
 
     public void setTitleDrawer(MenuItem item) {
         setTitle(item.getTitle());
-
-
     }
 
     public void replaceFragment() {
@@ -317,7 +330,6 @@ public class MainActivity extends AppCompatActivity
 
 
     }
-
 
     public void addToBackStackFragment(Class afFragmentClass) {
         try {
@@ -338,7 +350,6 @@ public class MainActivity extends AppCompatActivity
 
 
     }
-
 
     public void onDayLayoutClick(View view) {
         int nameday = 0;
@@ -376,6 +387,5 @@ public class MainActivity extends AppCompatActivity
         addToBackStackFragment(fragmentLayoutClass);
         setTitle(nameday);
     }
-
 
 }

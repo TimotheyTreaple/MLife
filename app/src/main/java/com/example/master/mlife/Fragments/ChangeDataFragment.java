@@ -13,6 +13,9 @@ import android.widget.CalendarView;
 import com.example.master.mlife.R;
 import com.example.master.mlife.View.NewCreateActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 public class ChangeDataFragment extends Fragment {
@@ -21,10 +24,16 @@ public class ChangeDataFragment extends Fragment {
     View view;
     CalendarView calendarView;
     String finalDate;
+    Date currentDate;
+
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.change_data_layout, container, false);
+
+        currentDate = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy");
+        finalDate = formatter.format(currentDate);
 
         btNext = view.findViewById(R.id.bt_next_1);
         calendarView = view.findViewById(R.id.calendarView2);
@@ -34,9 +43,8 @@ public class ChangeDataFragment extends Fragment {
             @Override
             public void onSelectedDayChange(CalendarView view, int year,
                                             int month, int dayOfMonth) {
-                finalDate= String.valueOf(month + 1) +
-                        "-" + dayOfMonth + "-" + year +
-                        " ";
+                finalDate= String.valueOf(dayOfMonth + "-" +(month + 1) +
+                        "-" + year);
             }
         });
 
@@ -50,6 +58,7 @@ public class ChangeDataFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().getIntent().putExtra("date",finalDate);
+                System.out.println(finalDate);
                 ((NewCreateActivity) Objects.requireNonNull(getActivity())).addToBackStackFragment(NewCreateFragment.class);
 
             }
