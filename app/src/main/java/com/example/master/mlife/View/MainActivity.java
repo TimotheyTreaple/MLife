@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity
         mSaturdayLayout = findViewById(id.saturday_button_go);
         mSundayLayout = findViewById(id.sunday_button_go);
 
-        mListUserTasks = findViewById(id.discr_for_task);
+        mListUserTasks = findViewById(id.my_recycler_view);
 
         mAuth = FirebaseAuth.getInstance();
 

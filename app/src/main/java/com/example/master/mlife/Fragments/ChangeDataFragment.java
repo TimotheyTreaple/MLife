@@ -36,9 +36,8 @@ public class ChangeDataFragment extends Fragment {
             @Override
             public void onSelectedDayChange(CalendarView view, int year,
                                             int month, int dayOfMonth) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                 String format = sdf.format(new Date(calendarView.getDate()));
-                 finalDate=format;
+                finalDate= String.valueOf((month + 1) +
+                        "-" + dayOfMonth + "-" + year) ;
             }
         });
 
