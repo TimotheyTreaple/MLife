@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,17 +30,19 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static android.support.constraint.Constraints.TAG;
 
 public class DayScheduleFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //отправить
     ArrayList arrayList=new ArrayList();
     String title1;
     String username;
     FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
     String currentDateandTime;
-    private RecyclerView titleRecyclerView;
+    ListView listView;
 
 
 
@@ -47,11 +50,13 @@ public class DayScheduleFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.day_schedule_layout, container, false);
-        titleRecyclerView = view.findViewById(R.id.tweets_recycler_view);
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+        listView= view.findViewById(R.id.list);
+
         currentDateandTime = sdf.format(new Date());
         username=user.getDisplayName();
         getDocuments();
+        addDataToListView();
 
 
         return view;
@@ -75,8 +80,13 @@ public class DayScheduleFragment extends Fragment {
                     }
                 });
             }
-    private void initRecyclerView() {
+    private void addDataToListView() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, arrayList);
 
+
+        listView.setAdapter(adapter);
     }
+
         }
 
