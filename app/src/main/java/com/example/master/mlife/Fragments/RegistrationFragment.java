@@ -62,7 +62,7 @@ public class RegistrationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (etEmail.getText() == null || etPassword.getText() == null || etEmail.getText().length() == 0 || etPassword.getText().length() == 0 || etUsername.getText() == null || etUsername.getText().length() == 0) {
-                    Toast.makeText(getContext(), "Поля должны быть заполнены!!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Поля должны быть заполнены!!", Toast.LENGTH_LONG).show();
                 } else if (etEmail.getText() != null && etPassword.getText() != null) {
                     registration(etEmail.getText().toString(), etPassword.getText().toString());
                 }
@@ -74,8 +74,8 @@ public class RegistrationFragment extends Fragment {
 
     public void onClickGetUsname() {
         String username = etUsername.getText().toString();
-        Intent intent5=new Intent(getActivity(), GetTimeFragment.class);
-        intent5.putExtra("nameUser",username);
+        Intent intent5 = new Intent(getActivity(), GetTimeFragment.class);
+        intent5.putExtra("nameUser", username);
 
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(username)

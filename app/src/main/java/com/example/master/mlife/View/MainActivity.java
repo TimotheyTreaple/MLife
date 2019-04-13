@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         currentDate = Calendar.getInstance().getTime();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         date = formatter.format(currentDate);
         setTitle(date);
 
@@ -202,13 +202,13 @@ public class MainActivity extends AppCompatActivity
 
                 tvEmail.setText(stEmail);
                 tvUsername.setText(stUsername);
-                if(f instanceof MyProfileFragment){
+                if (f instanceof MyProfileFragment) {
 
-                }else if(f instanceof DaysListFragment){
+                } else if (f instanceof DaysListFragment) {
 
-                }else if(f instanceof FriendsListFragment){
+                } else if (f instanceof FriendsListFragment) {
 
-                }else if(f instanceof DayScheduleFragment){
+                } else if (f instanceof DayScheduleFragment) {
 
                 }
 
@@ -245,9 +245,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         f = getSupportFragmentManager().findFragmentById(R.id.fragment_layout);
         if (id == R.id.item_calendar) {
@@ -262,14 +259,12 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-
         addToBackStackFragment(fragmentLayoutClass);
         item.setChecked(true);
 
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
