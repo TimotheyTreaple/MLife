@@ -46,8 +46,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity
@@ -381,6 +383,30 @@ public class MainActivity extends AppCompatActivity
 
         addToBackStackFragment(fragmentLayoutClass);
         setTitle(nameday);
+    }
+
+
+    public static void getDates() {
+        Date refDate = new Date();
+
+        Date[] days = getDaysOfWeek(refDate);
+
+        for (Date day : days) {
+            System.out.println(day);
+        }
+    }
+
+    private static Date[] getDaysOfWeek(Date refDate) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(refDate);
+        calendar.setFirstDayOfWeek(Calendar.MONDAY);
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        Date[] daysOfWeek = new Date[7];
+        for (int i = 0; i < 7; i++) {
+            daysOfWeek[i] = calendar.getTime();
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return daysOfWeek;
     }
 
 }
