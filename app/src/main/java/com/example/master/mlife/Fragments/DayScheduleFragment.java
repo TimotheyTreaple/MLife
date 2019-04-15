@@ -9,11 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.master.mlife.R;
+import com.example.master.mlife.View.MainActivity;
 
 public class DayScheduleFragment extends Fragment {
     @Nullable
-    @Override
+    String targetDay;
+    MainActivity mainActivity = (MainActivity) getActivity();
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.day_schedule_layout, container, false);
+        final View view = inflater.inflate(R.layout.day_schedule_layout, container, false);
+        targetDay = MainActivity.day;
+        System.out.println(targetDay);
+
+        return view;
     }
 }

@@ -55,6 +55,7 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static String day;
     ListView mListUserTasks;
 
 
@@ -92,6 +93,8 @@ public class MainActivity extends AppCompatActivity
 
     Fragment f;
 
+    String[] days = new String[7];
+   // String day;
 
     private static long back_pressed;
 
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         date = formatter.format(currentDate);
         setTitle(date);
+
 
         drawerView = (View) findViewById(id.drawer_layout);
 
@@ -147,6 +151,8 @@ public class MainActivity extends AppCompatActivity
 
         mListUserTasks = findViewById(id.discr_for_task);
 
+        getDayOfWeek();
+
 
     }
 
@@ -169,6 +175,7 @@ public class MainActivity extends AppCompatActivity
             String nikName = stUsername;
             intent.putExtra("nikName", nikName);
 
+          /*
             Firestore.collection("users")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>() {
@@ -183,6 +190,7 @@ public class MainActivity extends AppCompatActivity
                             }
                         }
                     });
+                    */
         }
     }
 
@@ -349,64 +357,58 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onDayLayoutClick(View view) {
-        int nameday = 0;
+
         switch (view.getId()) {
             case id.monday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                nameday = string.monday;
+                day = days[0];
                 break;
             case id.tuesday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                nameday = string.tuesday;
+                day = days[1];
                 break;
             case id.wednesday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                nameday = string.wednesday;
+                day = days[2];
                 break;
             case id.thursday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                nameday = string.thursday;
+                day = days[3];
                 break;
             case id.friday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                nameday = string.friday;
+                day = days[4];
                 break;
             case id.saturday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                nameday = string.saturday;
+                day = days[5];
                 break;
             case id.sunday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                nameday = string.sunday;
+                day = days[6];
                 break;
         }
 
         addToBackStackFragment(fragmentLayoutClass);
-        setTitle(nameday);
+        setTitle(day);
     }
 
+    public void getDayOfWeek() {
 
-    public static void getDates() {
-        Date refDate = new Date();
+        Calendar now = Calendar.getInstance();
+        now.setFirstDayOfWeek(Calendar.MONDAY);
 
-        Date[] days = getDaysOfWeek(refDate);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 
-        for (Date day : days) {
-            System.out.println(day);
-        }
-    }
 
-    private static Date[] getDaysOfWeek(Date refDate) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(refDate);
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        Date[] daysOfWeek = new Date[7];
+        int delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 2; //add 2 if your week start on monday
+        now.add(Calendar.DAY_OF_MONTH, delta);
         for (int i = 0; i < 7; i++) {
-            daysOfWeek[i] = calendar.getTime();
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            days[i] = format.format(now.getTime());
+            now.add(Calendar.DAY_OF_MONTH, 1);
         }
-        return daysOfWeek;
+        System.out.println(Arrays.toString(days));
+
     }
 
 }
