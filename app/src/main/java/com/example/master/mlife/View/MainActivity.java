@@ -44,6 +44,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity
 
     ListView mListUserTasks;
 
+    ArrayList arrayList;
 
     LinearLayout mMondayLayout;
     LinearLayout mTuesdayLayout;
@@ -291,8 +293,6 @@ public class MainActivity extends AppCompatActivity
             dlDrawer.closeDrawers();
         }
 
-
-
         return true;
     }
 
@@ -375,6 +375,17 @@ public class MainActivity extends AppCompatActivity
 
         addToBackStackFragment(fragmentLayoutClass);
         setTitle(nameday);
+    }
+
+    public void getArrayList(){
+        if(f instanceof DayScheduleFragment){
+            arrayList = getIntent().getStringArrayListExtra("arrayList");
+
+            System.out.println(arrayList);
+
+        }
+
+
     }
 
 

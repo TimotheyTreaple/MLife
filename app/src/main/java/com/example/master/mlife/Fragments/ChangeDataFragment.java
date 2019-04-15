@@ -22,7 +22,8 @@ public class ChangeDataFragment extends Fragment {
     Button btNext;
     View view;
     CalendarView calendarView;
-    String finalDate;
+    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+    String finalDate= sdf.format(new Date());
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
