@@ -154,12 +154,7 @@ public class SignInFragment extends Fragment {
             if(view.getId()==R.id.bt_sign_in){
                 checkEnterText();
             }else if(view.getId()==R.id.bt_registration){
-                ((RegistrationMain) Objects.requireNonNull(getActivity())).replaceFragments(RegistrationFragment.class);
-               /* if(etEmail.getText()==null||etPassword.getText()==null||etEmail.getText().length()==0||etPassword.getText().length()==0){
-                    Toast.makeText(getContext(), "Поля должны быть заполнены!!", Toast.LENGTH_SHORT).show();
-                }else if(etEmail.getText()!=null&&etPassword.getText()!=null) {
-                    registration(etEmail.getText().toString(),etPassword.getText().toString());
-                }*/
+                ((RegistrationMain) Objects.requireNonNull(getActivity())).addToBackStackFragment(RegistrationFragment.class);
             }
 
 
