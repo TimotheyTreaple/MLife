@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity
     Fragment f;
 
     String[] days = new String[7];
-   // String day;
 
     private static long back_pressed;
 
@@ -114,7 +113,6 @@ public class MainActivity extends AppCompatActivity
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         date = formatter.format(currentDate);
         setTitle(date);
-
 
         drawerView = (View) findViewById(id.drawer_layout);
 
@@ -153,7 +151,6 @@ public class MainActivity extends AppCompatActivity
 
         getDayOfWeek();
 
-
     }
 
     @Override
@@ -175,7 +172,6 @@ public class MainActivity extends AppCompatActivity
             String nikName = stUsername;
             intent.putExtra("nikName", nikName);
 
-          /*
             Firestore.collection("users")
                     .get()
                     .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>() {
@@ -190,7 +186,6 @@ public class MainActivity extends AppCompatActivity
                             }
                         }
                     });
-                    */
         }
     }
 
@@ -361,37 +356,38 @@ public class MainActivity extends AppCompatActivity
         switch (view.getId()) {
             case id.monday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                day = days[0];
+                day=days[0];
                 break;
             case id.tuesday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                day = days[1];
+                day=days[1];
                 break;
             case id.wednesday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                day = days[2];
+                day=days[2];
                 break;
             case id.thursday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                day = days[3];
+                day=days[3];
                 break;
             case id.friday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                day = days[4];
+                day=days[4];
                 break;
             case id.saturday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                day = days[5];
+                day=days[5];
                 break;
             case id.sunday_button_go:
                 fragmentLayoutClass = DayScheduleFragment.class;
-                day = days[6];
+                day=days[6];
                 break;
         }
 
         addToBackStackFragment(fragmentLayoutClass);
         setTitle(day);
     }
+
 
     public void getDayOfWeek() {
 
