@@ -38,7 +38,6 @@ public class DayScheduleFragment extends Fragment {
 
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String currentDateAndTime;
     ListView listView;
 
     String targetDay;
@@ -47,35 +46,34 @@ public class DayScheduleFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.day_schedule_layout, container, false);
-        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
         listView = view.findViewById(R.id.discr_for_task);
-
-        currentDateAndTime = sdf.format(new Date());
         username = user.getDisplayName();
         getDocuments();
         addDataToListView();
 
-        targetDay = MainActivity.day;
+
         return view;
 
     }
 
     void getDocuments() {
-        db.collection("Shadule").document("test").collection("14-4-2019")
+        targetDay = MainActivity.day;
+        db.collection("Schedule").document(username).collection(targetDay)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task <QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            System.out.println("Error 2!");
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                title1 = document.getString("title");
+                                title1 = document.getString("nameEvent");
                                 System.out.print(title1);
-
-
+                                arrayList.add(title1);
                             }
+
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            System.out.println("Error!");
                         }
                     }
                 });

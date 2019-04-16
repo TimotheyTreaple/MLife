@@ -130,7 +130,7 @@ public class NewCreateActivity extends AppCompatActivity {
 
         final String TAG ="1111111111111111" ;
 
-        firestore.collection("Shadule").document(username).collection("Shadule").document(date)
+        firestore.collection("Schedule").document(username).collection("Schedule").document(date)
                 .set(event)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
 

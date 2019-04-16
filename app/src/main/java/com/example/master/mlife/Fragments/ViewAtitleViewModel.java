@@ -14,5 +14,7 @@ import com.example.master.mlife.R;
 public class ViewAtitleViewModel extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.day_schedule_layout, container, false);
+
+
         return view;
     }}

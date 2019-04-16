@@ -29,14 +29,6 @@
                 android:text="@string/monday"
                 android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/text_monday_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="72"
-                android:gravity="left|center_vertical|center"
-                android:text="TextView"
-                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,14 +49,6 @@
                 android:text="@string/tuesday"
                 android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/text_tuesday_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="72"
-                android:gravity="left|center_horizontal|center"
-                android:text="TextView"
-                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -79,20 +63,12 @@
             <TextView
                 android:id="@+id/text_wednesday"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="38"
                 android:gravity="left|center_horizontal|center"
                 android:text="@string/wednesday"
                 android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/text_wednesday_main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="72"
-                android:gravity="left|center_horizontal|center"
-                android:text="TextView"
-                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -113,14 +89,6 @@
                 android:text="@string/thursday"
                 android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/text_thursday_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="72"
-                android:gravity="left|center_horizontal|center"
-                android:text="TextView"
-                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -141,14 +109,6 @@
                 android:text="@string/friday"
                 android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/text_friday_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="72"
-                android:gravity="left|center_horizontal|center"
-                android:text="TextView"
-                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -169,14 +129,6 @@
                 android:text="@string/saturday"
                 android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/text_saturday_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="72"
-                android:gravity="left|center_horizontal|center"
-                android:text="TextView"
-                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -197,14 +149,6 @@
                 android:text="@string/sunday"
                 android:textSize="24sp" />
 
-            <TextView
-                android:id="@+id/text_sunday_main"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="72"
-                android:gravity="left|center_horizontal|center"
-                android:text="TextView"
-                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 
