@@ -32,7 +32,7 @@ public class ChangeDataFragment extends Fragment {
         view = inflater.inflate(R.layout.change_data_layout, container, false);
 
         currentDate = Calendar.getInstance().getTime();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy");
+        final SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy");
         finalDate = formatter.format(currentDate);
 
         btNext = view.findViewById(R.id.bt_next_1);
@@ -43,8 +43,31 @@ public class ChangeDataFragment extends Fragment {
             @Override
             public void onSelectedDayChange(CalendarView view, int year,
                                             int month, int dayOfMonth) {
-                finalDate= String.valueOf(dayOfMonth + "-" +(month + 1) +
-                        "-" + year);
+
+
+                if (month + 1 < 10) {
+                    if (dayOfMonth < 10) {
+                        finalDate = String.valueOf("0" + dayOfMonth + "-" + "0" + (month + 1) +
+                                "-" + year);
+                    } else {
+                        finalDate = String.valueOf(dayOfMonth + "-" + "0" + (month + 1) +
+                                "-" + year);
+                    }
+
+                } else if (month + 1 >= 10) {
+                    if (dayOfMonth < 10) {
+                        finalDate = String.valueOf("0" + dayOfMonth + "-" + (month + 1) +
+                                "-" + year);
+                    } else {
+                        finalDate = String.valueOf(dayOfMonth + "-" + (month + 1) +
+                                "-" + year);
+                    }
+                } else {
+                    System.out.println("Error!!!");
+                }
+                System.out.println(finalDate);
+
+
             }
         });
 
@@ -57,7 +80,7 @@ public class ChangeDataFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                getActivity().getIntent().putExtra("date",finalDate);
+                getActivity().getIntent().putExtra("date", finalDate);
                 System.out.println(finalDate);
                 ((NewCreateActivity) Objects.requireNonNull(getActivity())).addToBackStackFragment(NewCreateFragment.class);
 
