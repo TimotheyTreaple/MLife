@@ -61,22 +61,30 @@ public class DayScheduleFragment extends Fragment {
         db.collection("Schedule").document(username).collection(targetDay)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task <QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            System.out.println("Error 2!");
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                title1 = document.getString("nameEvent");
-                                System.out.print(title1);
-                                arrayList.add(title1);
-                            }
+            @Override
+            public void onComplete(@NonNull Task <QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    System.out.print(task);
+                    //task.getCount();
+                    //task.getReference();
+                    QuerySnapshot querySnapshot = task.getResult();
+                    System.out.println("Зашло в if");
+                    System.out.println(querySnapshot);
+                    for (QueryDocumentSnapshot document : task.getResult()) {
 
-                        } else {
-                            System.out.println("Error!");
-                        }
+                        Log.d(TAG, document.getId() + " => " + document.getData());
+                        System.out.println("Error 3!");
+
+                        title1 = document.getString("nameEvent");
+                        System.out.print(title1);
+                        arrayList.add(title1);
                     }
-                });
+
+                } else {
+                    System.out.println("Error!");
+                }
+            }
+        });
     }
 
     private void addDataToListView() {

@@ -98,7 +98,7 @@ public class RegistrationFragment extends Fragment {
 // Add a new document with a generated ID
         firestore.collection("users").document(etUsername.getText().toString())
                 .set(user);
-        firestore.collection("Shadule").document(etUsername.getText().toString())
+        firestore.collection("Schedule").document(etUsername.getText().toString())
                 .set(user);
     }
 

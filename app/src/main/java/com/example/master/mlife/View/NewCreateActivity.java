@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -130,19 +131,7 @@ public class NewCreateActivity extends AppCompatActivity {
 
         final String TAG ="1111111111111111" ;
 
-        firestore.collection("Schedule").document(username).collection("Schedule").document(date)
-                .set(event)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
+        firestore.collection("Schedule").document(username).collection(date).document(title).set(event);
     }
 
 
