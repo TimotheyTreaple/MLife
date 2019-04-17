@@ -65,12 +65,12 @@ public class DayScheduleFragment extends Fragment {
             public void onComplete(@NonNull Task <QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     System.out.print(task);
-                    //task.getCount();
-                    //task.getReference();
-                    QuerySnapshot querySnapshot = task.getResult();
+                    QuerySnapshot taskTF = task.getResult();
+                    listView.getCount();
+
                     System.out.println("Зашло в if");
-                    System.out.println(querySnapshot);
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+                    System.out.println(taskTF);
+                    for (QueryDocumentSnapshot document : taskTF) {
 
                         Log.d(TAG, document.getId() + " => " + document.getData());
                         System.out.println("Error 3!");
@@ -79,7 +79,6 @@ public class DayScheduleFragment extends Fragment {
                         System.out.print(title1);
                         arrayList.add(title1);
                     }
-
                 } else {
                     System.out.println("Error!");
                 }
