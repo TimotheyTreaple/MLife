@@ -8,8 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.master.mlife.R;
 import com.example.master.mlife.View.MainActivity;
@@ -43,19 +46,31 @@ public class DayScheduleFragment extends Fragment {
     ListView listView;
 
     String targetDay;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.day_schedule_layout, container, false);
         listView = view.findViewById(R.id.discr_for_task);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView <?> parent, View itemClicked, int position, long id) {
+                Toast.makeText(getContext(), ((TextView) itemClicked).getText(),
+                        Toast.LENGTH_SHORT).show();
+                ((MainActivity) Objects.requireNonNull(getActivity())).addToBackStackFragment(ViewAtitleViewModel.class);
+
+
+            }
+        });
         username = user.getDisplayName();
         getDocuments();
-        addDataToListView();
 
 
         return view;
 
     }
+
 
     void getDocuments() {
         targetDay = MainActivity.day;
@@ -69,6 +84,8 @@ public class DayScheduleFragment extends Fragment {
 
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 arrayList.add(document.getId());
+                                System.out.print(arrayList);
+                                addDataToListView();
 
                             }
                             System.out.println(arrayList.toString());
