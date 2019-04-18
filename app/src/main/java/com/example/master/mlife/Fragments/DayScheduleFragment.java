@@ -26,6 +26,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -41,7 +43,6 @@ public class DayScheduleFragment extends Fragment {
     ListView listView;
 
     String targetDay;
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,29 +62,21 @@ public class DayScheduleFragment extends Fragment {
         db.collection("Schedule").document(username).collection(targetDay)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener <QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task <QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    System.out.print(task);
-                    QuerySnapshot taskTF = task.getResult();
-                    listView.getCount();
+                    @Override
+                    public void onComplete(@NonNull Task <QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
 
-                    System.out.println("Зашло в if");
-                    System.out.println(taskTF);
-                    for (QueryDocumentSnapshot document : taskTF) {
 
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                        System.out.println("Error 3!");
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                arrayList.add(document.getId());
 
-                        title1 = document.getString("nameEvent");
-                        System.out.print(title1);
-                        arrayList.add(title1);
+                            }
+                            System.out.println(arrayList.toString());
+                        } else {
+                            System.out.println("Error!");
+                        }
                     }
-                } else {
-                    System.out.println("Error!");
-                }
-            }
-        });
+                });
     }
 
     private void addDataToListView() {
