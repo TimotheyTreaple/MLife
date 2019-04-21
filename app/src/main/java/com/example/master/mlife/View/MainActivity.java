@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
         MultiDex.install(this);
         setContentView(R.layout.activity_main);
         fragmentLayoutClass = DaysListFragment.class;
-        replaceFragment();
+        replaceFragment(fragmentLayoutClass);
         Toolbar toolbar = findViewById(id.toolbar_drawer);
         setSupportActionBar(toolbar);
 
@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity
             setTitle(date);
             fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
             fragmentLayoutClass = DaysListFragment.class;
-            replaceFragment();
+            replaceFragment(fragmentLayoutClass);
 
         } else if (f instanceof DaysListFragment) {
             if (back_pressed + 2000 > System.currentTimeMillis()) {
@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity
                 Toast.makeText(getBaseContext(), "Press once again to exit!", Toast.LENGTH_SHORT).show();
             }
             back_pressed = System.currentTimeMillis();
-        }else{
+        }else {
             super.onBackPressed();
         }
     }
@@ -302,7 +302,7 @@ public class MainActivity extends AppCompatActivity
             if (f instanceof DaysListFragment) {
                 addToBackStackFragment(fragmentLayoutClass);
             } else {
-                replaceFragment();
+                replaceFragment(fragmentLayoutClass);
             }
             setTitleDrawer(item);
         } else {
@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity
         setTitle(item.getTitle());
     }
 
-    public void replaceFragment() {
+    public void replaceFragment(Class afFragmentClass) {
         try {
             fragment = (Fragment) fragmentLayoutClass.newInstance();
         } catch (Exception e) {
@@ -339,7 +339,6 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         // Вставляем фрагмент, заменяя текущий фрагмент
         fragmentManager
                 .beginTransaction()
@@ -349,7 +348,6 @@ public class MainActivity extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-
 
     }
 

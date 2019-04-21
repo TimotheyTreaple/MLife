@@ -38,13 +38,13 @@ public class DayScheduleFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     //отправить
     ArrayList arrayList = new ArrayList();
-    String title1;
     String username;
 
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     ListView listView;
 
+    String title;
     String targetDay;
 
     @Nullable
@@ -52,25 +52,24 @@ public class DayScheduleFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.day_schedule_layout, container, false);
         listView = view.findViewById(R.id.discr_for_task);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView <?> parent, View itemClicked, int position, long id) {
-                Toast.makeText(getContext(), ((TextView) itemClicked).getText(),
-                        Toast.LENGTH_SHORT).show();
-                ((MainActivity) Objects.requireNonNull(getActivity())).addToBackStackFragment(ViewAtitleViewModel.class);
-
-
-            }
-        });
         username = user.getDisplayName();
         getDocuments();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView <?> parent, View view,
+                                    int position, long id) {
+                System.out.println("itemClick: position = " + position + ", id = "
+                        + id);
+                title = ((TextView) view).getText().toString();
+                MainActivity mainActivity = (MainActivity) getActivity();
+                Objects.requireNonNull(mainActivity).addToBackStackFragment(ViewAtitleViewModel.class);
+                arrayList.clear();
+            }
+        });
 
 
         return view;
 
     }
-
 
     void getDocuments() {
         targetDay = MainActivity.day;
@@ -80,7 +79,6 @@ public class DayScheduleFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task <QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-
 
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 arrayList.add(document.getId());

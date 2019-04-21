@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.master.mlife.R;
@@ -31,7 +30,7 @@ public class NewCreateFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.new_create_layout, container, false);
         btNext = view.findViewById(R.id.bt_next_2);
-        eventName=view.findViewById(R.id.et_title);
+        eventName=view.findViewById(R.id.edit_text_title);
         rgForPrivacy=view.findViewById(R.id.radioGroup2);
         descriptionOfEvent=view.findViewById(R.id.et_description);
 
