@@ -46,6 +46,7 @@ public class DayScheduleFragment extends Fragment {
 
     String title;
     String targetDay;
+    String time;
 
     @Nullable
     @Override
@@ -81,9 +82,11 @@ public class DayScheduleFragment extends Fragment {
                         if (task.isSuccessful()) {
 
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                arrayList.add(document.getId());
+                                time=document.getString("time");
+                                arrayList.add(time+"     "+ document.getId());
                                 System.out.print(arrayList);
                                 addDataToListView();
+
 
                             }
                             System.out.println(arrayList.toString());

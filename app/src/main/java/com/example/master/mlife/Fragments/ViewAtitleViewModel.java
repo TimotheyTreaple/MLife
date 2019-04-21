@@ -51,5 +51,6 @@ public class ViewAtitleViewModel extends Fragment {
 
     public void setInformation() {
 
+
     }
 }

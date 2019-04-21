@@ -1,5 +1,6 @@
 package com.example.master.mlife.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,10 +35,11 @@ public class GetTimeFragment extends Fragment {
     public void setListeners() {
         btComplete.setOnClickListener(new View.OnClickListener() {
 
+            @SuppressLint("NewApi")
             @Override
             public void onClick(View v) {
-                hour = timePicker.getCurrentHour();
-                minute = timePicker.getCurrentMinute();
+                hour = timePicker.getHour();
+                minute = timePicker.getMinute();
                 String fullTime=(hour+":"+minute);
 
                 getActivity().getIntent().putExtra("time",fullTime);
