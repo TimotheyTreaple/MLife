@@ -1,5 +1,6 @@
 package com.example.master.mlife.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -70,7 +71,9 @@ public class DayScheduleFragment extends Fragment {
                 System.out.println("itemClick: position = " + position + ", id = "
                         + id);
                 title = ((TextView) view).getText().toString();
+                Objects.requireNonNull(getActivity()).getIntent().putExtra("title4", title);
                 mainActivity.addToBackStackFragment(ViewAtitleViewModel.class);
+                arrayList.clear();
             }
         });
 
@@ -93,7 +96,7 @@ public class DayScheduleFragment extends Fragment {
                                 time = document.getString("time");
 
 
-                                arrayList.add(time + "     " + document.getId());
+                                arrayList.add(document.getId());
                                 System.out.print(arrayList);
                                 Collections.sort(arrayList);
                                 addDataToListView();

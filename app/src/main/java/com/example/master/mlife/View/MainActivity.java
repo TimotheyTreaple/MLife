@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity
             fragmentLayoutClass = FriendsListFragment.class;
         } else if (id == R.id.nav_day_schedule) {
             fragmentLayoutClass = DayScheduleFragment.class;
-            day=currentDate.toString();
+            day=date;
         } else if (id == R.id.nav_sign_out) {
             mAuth.signOut();
             stUsername = null;
@@ -388,7 +388,6 @@ public class MainActivity extends AppCompatActivity
         addToBackStackFragment(fragmentLayoutClass);
         setTitle(day);
     }
-
 
     public void getDayOfWeek() {
 

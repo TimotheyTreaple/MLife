@@ -16,6 +16,7 @@
         android:ems="10"
         android:hint="@string/e_mail"
         android:textAlignment="center"
+        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/et_password"
         app:layout_constraintEnd_toEndOf="@+id/et_password"
         tools:background="@color/white_greyish" />
