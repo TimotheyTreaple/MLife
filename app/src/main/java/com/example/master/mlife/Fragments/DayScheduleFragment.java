@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +49,12 @@ public class DayScheduleFragment extends Fragment {
     String title;
     String targetDay;
     String time;
+    MainActivity mainActivity;
+
+
+    FragmentManager fragmentManager = getFragmentManager();
+
+    Fragment fragment = null;
 
     @Nullable
     @Override
@@ -55,15 +63,14 @@ public class DayScheduleFragment extends Fragment {
         listView = view.findViewById(R.id.discr_for_task);
         username = user.getDisplayName();
         getDocuments();
+        mainActivity = (MainActivity) getActivity();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView <?> parent, View view,
                                     int position, long id) {
                 System.out.println("itemClick: position = " + position + ", id = "
                         + id);
                 title = ((TextView) view).getText().toString();
-                MainActivity mainActivity = (MainActivity) getActivity();
-                Objects.requireNonNull(mainActivity).addToBackStackFragment(ViewAtitleViewModel.class);
-                arrayList.clear();
+                mainActivity.addToBackStackFragment(ViewAtitleViewModel.class);
             }
         });
 
@@ -71,6 +78,7 @@ public class DayScheduleFragment extends Fragment {
         return view;
 
     }
+
 
     void getDocuments() {
         targetDay = MainActivity.day;
@@ -82,9 +90,12 @@ public class DayScheduleFragment extends Fragment {
                         if (task.isSuccessful()) {
 
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                time=document.getString("time");
-                                arrayList.add(time+"     "+ document.getId());
+                                time = document.getString("time");
+
+
+                                arrayList.add(time + "     " + document.getId());
                                 System.out.print(arrayList);
+                                Collections.sort(arrayList);
                                 addDataToListView();
 
 
