@@ -56,16 +56,6 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public static String day;
-    ListView mListUserTasks;
-
-    LinearLayout mMondayLayout;
-    LinearLayout mTuesdayLayout;
-    LinearLayout mWednesdayLayout;
-    LinearLayout mThursdayLayout;
-    LinearLayout mFridayLayout;
-    LinearLayout mSaturdayLayout;
-    LinearLayout mSundayLayout;
-
 
     Fragment fragment = null;
     Class fragmentLayoutClass = null;
@@ -91,8 +81,6 @@ public class MainActivity extends AppCompatActivity
     View drawerView;
 
     Fragment f;
-
-    String[] days = new String[7];
 
     private static long back_pressed;
 
@@ -138,17 +126,6 @@ public class MainActivity extends AppCompatActivity
         tvEmail = findViewById(id.tv_email);
         tvUsername = findViewById(id.tv_nickname);
 
-        mMondayLayout = findViewById(id.monday_button_go);
-        mTuesdayLayout = findViewById(id.tuesday_button_go);
-        mWednesdayLayout = findViewById(id.wednesday_button_go);
-        mThursdayLayout = findViewById(id.thursday_button_go);
-        mFridayLayout = findViewById(id.friday_button_go);
-        mSaturdayLayout = findViewById(id.saturday_button_go);
-        mSundayLayout = findViewById(id.sunday_button_go);
-
-        mListUserTasks = findViewById(id.discr_for_task);
-
-        getDayOfWeek();
 
     }
 
@@ -241,6 +218,7 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
     public void inWorkToast(){
         Toast.makeText(getBaseContext(), "В разработке!", Toast.LENGTH_SHORT).show();
 
@@ -360,59 +338,5 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void onDayLayoutClick(View view) {
-
-        switch (view.getId()) {
-            case id.monday_button_go:
-                fragmentLayoutClass = DayScheduleFragment.class;
-                day=days[0];
-                break;
-            case id.tuesday_button_go:
-                fragmentLayoutClass = DayScheduleFragment.class;
-                day=days[1];
-                break;
-            case id.wednesday_button_go:
-                fragmentLayoutClass = DayScheduleFragment.class;
-                day=days[2];
-                break;
-            case id.thursday_button_go:
-                fragmentLayoutClass = DayScheduleFragment.class;
-                day=days[3];
-                break;
-            case id.friday_button_go:
-                fragmentLayoutClass = DayScheduleFragment.class;
-                day=days[4];
-                break;
-            case id.saturday_button_go:
-                fragmentLayoutClass = DayScheduleFragment.class;
-                day=days[5];
-                break;
-            case id.sunday_button_go:
-                fragmentLayoutClass = DayScheduleFragment.class;
-                day=days[6];
-                break;
-        }
-
-        addToBackStackFragment(fragmentLayoutClass);
-        setTitle(day);
-    }
-
-    public void getDayOfWeek() {
-
-        Calendar now = Calendar.getInstance();
-        now.setFirstDayOfWeek(Calendar.MONDAY);
-
-        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-
-
-        int delta = -now.get(GregorianCalendar.DAY_OF_WEEK) + 2; //add 2 if your week start on monday
-        now.add(Calendar.DAY_OF_MONTH, delta);
-        for (int i = 0; i < 7; i++) {
-            days[i] = format.format(now.getTime());
-            now.add(Calendar.DAY_OF_MONTH, 1);
-        }
-
-
-    }
 
 }

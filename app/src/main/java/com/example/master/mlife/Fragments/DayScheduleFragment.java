@@ -1,12 +1,11 @@
 package com.example.master.mlife.Fragments;
 
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.master.mlife.R;
 import com.example.master.mlife.View.MainActivity;
-import com.example.master.mlife.View.NewCreateActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,33 +24,27 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Objects;
-
-import static android.support.constraint.Constraints.TAG;
 
 public class DayScheduleFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    //отправить
-    ArrayList arrayList = new ArrayList();
+    ArrayList <String> arrayList = new ArrayList <String>(0);
+
     String username;
 
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     ListView listView;
 
+
     String title;
     String targetDay;
-    String time;
+    String id;
     MainActivity mainActivity;
 
-
-    FragmentManager fragmentManager = getFragmentManager();
+    int size = 0;
 
     Fragment fragment = null;
 
@@ -64,6 +55,7 @@ public class DayScheduleFragment extends Fragment {
         listView = view.findViewById(R.id.discr_for_task);
         username = user.getDisplayName();
         getDocuments();
+
         mainActivity = (MainActivity) getActivity();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView <?> parent, View view,
@@ -89,22 +81,24 @@ public class DayScheduleFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task <QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                time = document.getString("time");
-
-
-                                arrayList.add(document.getId());
+                                id = document.getId();
+                                arrayList.add(id);
                                 Collections.sort(arrayList);
                                 addDataToListView();
-
-
+                                size=arrayList.size();
                             }
                         } else {
                             System.out.println("Error!");
                         }
+                        if(size==0){
+                            checkOfEventInDay();
+                        }
                     }
                 });
+
+
+
     }
 
     private void addDataToListView() {
@@ -112,13 +106,24 @@ public class DayScheduleFragment extends Fragment {
                 android.R.layout.simple_list_item_1, arrayList);
         listView.setAdapter(adapter);
 
-        if (listView != null) {
-            getActivity().getIntent().putStringArrayListExtra("arrayList", arrayList);
-            MainActivity mainActivity = (MainActivity) getActivity();
-            assert mainActivity != null;
-
-        }
     }
 
-}
+    protected void checkOfEventInDay() {
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Important message")
+                .setMessage("There are no event today")
+                .setCancelable(false)
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                getActivity().onBackPressed();
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+
+    }
+}
