@@ -68,8 +68,6 @@ public class DayScheduleFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView <?> parent, View view,
                                     int position, long id) {
-                System.out.println("itemClick: position = " + position + ", id = "
-                        + id);
                 title = ((TextView) view).getText().toString();
                 Objects.requireNonNull(getActivity()).getIntent().putExtra("title4", title);
                 mainActivity.addToBackStackFragment(ViewAtitleViewModel.class);
@@ -97,13 +95,11 @@ public class DayScheduleFragment extends Fragment {
 
 
                                 arrayList.add(document.getId());
-                                System.out.print(arrayList);
                                 Collections.sort(arrayList);
                                 addDataToListView();
 
 
                             }
-                            System.out.println(arrayList.toString());
                         } else {
                             System.out.println("Error!");
                         }

@@ -114,41 +114,6 @@ public class SignInFragment extends Fragment {
         });
 
     }
-    public void getCurrentUser(){
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            String name = user.getDisplayName();
-            String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
-            boolean emailVerified = user.isEmailVerified();
-            String uid = user.getUid();
-        }
-    }
-
-
-    public void registration(String email, String password){
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener <AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task <AuthResult> task) {
-                if (task.isSuccessful()) {
-                    Log.d(TAG, "createUserWithEmail:success");
-                    FirebaseUser user = mAuth.getCurrentUser();
-                    us1=user;
-                    updateUI(user);
-                    Toast.makeText(getContext(), "Регистрация успешна", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                    updateUI(null);
-                    Toast.makeText(getContext(), "Регистрация провалена", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-    }
-
-
     public void onClickReg(View view) {
 
             if(view.getId()==R.id.bt_sign_in){

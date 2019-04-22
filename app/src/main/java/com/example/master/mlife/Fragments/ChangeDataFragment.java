@@ -65,7 +65,6 @@ public class ChangeDataFragment extends Fragment {
                 } else {
                     System.out.println("Error!!!");
                 }
-                System.out.println(finalDate);
 
 
             }
@@ -81,7 +80,6 @@ public class ChangeDataFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().getIntent().putExtra("date", finalDate);
-                System.out.println(finalDate);
                 ((NewCreateActivity) Objects.requireNonNull(getActivity())).addToBackStackFragment(NewCreateFragment.class);
 
             }

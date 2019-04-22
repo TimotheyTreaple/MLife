@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity
     public static String day;
     ListView mListUserTasks;
 
-
     LinearLayout mMondayLayout;
     LinearLayout mTuesdayLayout;
     LinearLayout mWednesdayLayout;
@@ -179,7 +178,7 @@ public class MainActivity extends AppCompatActivity
                         public void onComplete(@NonNull Task <QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
+
                                 }
                             } else {
                                 Log.w(TAG, "Error getting documents.", task.getException());
@@ -242,6 +241,14 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+    public void inWorkToast(){
+        Toast.makeText(getBaseContext(), "В разработке!", Toast.LENGTH_SHORT).show();
+
+        DrawerLayout drawer = findViewById(id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -252,6 +259,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         int id = item.getItemId();
         f = getSupportFragmentManager().findFragmentById(R.id.fragment_layout);
         if (id == R.id.item_calendar) {
@@ -277,12 +285,15 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
         f = getSupportFragmentManager().findFragmentById(R.id.fragment_layout);
+
         if (id == R.id.nav_my_profile) {
-            fragmentLayoutClass = MyProfileFragment.class;
+            //fragmentLayoutClass = MyProfileFragment.class;
+            inWorkToast();
         } else if (id == R.id.nav_main_schedule) {
             fragmentLayoutClass = DaysListFragment.class;
         } else if (id == R.id.nav_friends_list) {
-            fragmentLayoutClass = FriendsListFragment.class;
+           // fragmentLayoutClass = FriendsListFragment.class;
+            inWorkToast();
         } else if (id == R.id.nav_day_schedule) {
             fragmentLayoutClass = DayScheduleFragment.class;
             day=date;
@@ -296,7 +307,7 @@ public class MainActivity extends AppCompatActivity
             startActivityForResult(intent, 1);
             return true;
         }
-        // Выделяем выбранный пункт меню в шторке
+
         item.setChecked(true);
 
         if (f.getClass() != fragmentLayoutClass) {
@@ -320,12 +331,10 @@ public class MainActivity extends AppCompatActivity
 
     public void replaceFragment(Class afFragmentClass) {
         try {
-            fragment = (Fragment) fragmentLayoutClass.newInstance();
+            fragment = (Fragment) afFragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // Вставляем фрагмент, заменяя текущий фрагмент
         fragmentManager.beginTransaction().replace(id.fragment_layout, fragment).commit();
 
         DrawerLayout drawer = findViewById(id.drawer_layout);
@@ -340,7 +349,6 @@ public class MainActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // Вставляем фрагмент, заменяя текущий фрагмент
         fragmentManager
                 .beginTransaction()
                 .replace(id.fragment_layout, fragment, afFragmentClass.getSimpleName())
@@ -403,7 +411,7 @@ public class MainActivity extends AppCompatActivity
             days[i] = format.format(now.getTime());
             now.add(Calendar.DAY_OF_MONTH, 1);
         }
-        System.out.println(Arrays.toString(days));
+
 
     }
 

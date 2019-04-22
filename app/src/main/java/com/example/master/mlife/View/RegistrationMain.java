@@ -73,7 +73,6 @@ public class RegistrationMain extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Вставляем фрагмент, заменяя текущий фрагмент
         fragmentManagerReg
                 .beginTransaction()
                 .replace(R.id.null_reg_layout, fragmentReg, afFragmentClass.getSimpleName())
@@ -81,12 +80,5 @@ public class RegistrationMain extends AppCompatActivity {
                 .commit();
 
     }
-
-
-    public void stopedActivity() {
-
-        finish();
-    }
-
 
 }

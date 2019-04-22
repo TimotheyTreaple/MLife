@@ -72,7 +72,6 @@ public class ViewAtitleViewModel extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (Objects.requireNonNull(document).exists()) {
-                        Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                         date.setText(document.getString("date"));
                         time.setText(document.getString("time"));
                         title.setText(document.getString("nameEvent"));

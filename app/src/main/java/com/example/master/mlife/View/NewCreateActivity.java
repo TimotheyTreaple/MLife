@@ -34,8 +34,6 @@ public class NewCreateActivity extends AppCompatActivity {
     FragmentManager fragmentManager = getSupportFragmentManager();
     FirebaseFirestore firestore=FirebaseFirestore.getInstance();
 
-    Intent intent = new Intent();
-
     String username;
     String date = null;
     String time = null;
@@ -68,7 +66,6 @@ public class NewCreateActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // Вставляем фрагмент, заменяя текущий фрагмент
         fragmentManager
                 .beginTransaction()
                 .add(R.id.new_create_container, fragment, afFragmentClass.getSimpleName())
@@ -128,8 +125,6 @@ public class NewCreateActivity extends AppCompatActivity {
         event.put("description", description);
         event.put("date", date);
         event.put("privacy", privacy);
-
-        final String TAG ="1111111111111111" ;
 
         firestore.collection("Schedule").document(username).collection(date).document(title).set(event);
     }

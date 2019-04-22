@@ -54,10 +54,10 @@ public class CalendarFragment extends Fragment {
                                     finalDate = String.valueOf(dayOfMonth + "-" + (month + 1) +
                                             "-" + year);
                                 }
+
                             } else {
                                 System.out.println("Error!!!");
                             }
-                            System.out.println(finalDate);
                             MainActivity.day=finalDate;
                             MainActivity mainActivity = (MainActivity) getActivity();
                             mainActivity.addToBackStackFragment(DayScheduleFragment.class);

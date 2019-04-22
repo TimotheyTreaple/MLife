@@ -40,10 +40,8 @@ public class NewCreateFragment extends Fragment {
                 // в GetTimeFragment результат
                 if (checkedId == R.id.rb_public) {
                     privacy=1;
-                    System.out.println(privacy);
                 } else  if (checkedId == R.id.rb_private) {
                     privacy=-1;
-                    System.out.println(privacy);
                 }
 
             }
@@ -67,8 +65,6 @@ public class NewCreateFragment extends Fragment {
                 getActivity().getIntent().putExtra("privacy",privacy);
                 getActivity().getIntent().putExtra("title",title);
                 getActivity().getIntent().putExtra("description",description);
-
-
 
                 ((NewCreateActivity) Objects.requireNonNull(getActivity())).addToBackStackFragment(GetTimeFragment.class);
 
