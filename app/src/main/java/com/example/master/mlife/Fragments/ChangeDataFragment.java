@@ -32,7 +32,7 @@ public class ChangeDataFragment extends Fragment {
         view = inflater.inflate(R.layout.change_data_layout, container, false);
 
         currentDate = Calendar.getInstance().getTime();
-        final SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy");
+        final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         finalDate = formatter.format(currentDate);
 
         btNext = view.findViewById(R.id.bt_next_1);

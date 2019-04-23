@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorAccent"
     android:filterTouchesWhenObscured="true">
 
 
@@ -19,6 +19,7 @@
         android:text="Enter title:"
         android:textAlignment="center"
         android:textAllCaps="true"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:typeface="sans"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +38,7 @@
         android:ems="10"
         android:hint="Title"
         android:inputType="textPersonName"
+        android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.269"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,8 +52,11 @@
         android:layout_marginStart="111dp"
         android:layout_marginEnd="112dp"
         android:layout_marginBottom="22dp"
+        android:background="@color/white"
         android:onClick="onClickNewCreate"
         android:text="Next"
+        android:textColor="@color/colorAccent"
+        android:textColorLink="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -67,6 +72,7 @@
         android:text="Enter Description:"
         android:textAlignment="center"
         android:textAllCaps="true"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:typeface="sans"
         app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +99,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Description"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent" />
     </ScrollView>
 
     <RadioGroup
@@ -103,6 +110,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="56dp"
         android:layout_marginEnd="8dp"
+        android:background="@color/white"
         android:onClick="onCheckedChanged"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.201"
@@ -115,14 +123,25 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:checked="true"
-            android:text="Public" />
+            android:isScrollContainer="true"
+            android:shadowColor="@color/white"
+            android:text="Public"
+            android:textColor="@color/colorAccent"
+            android:textColorHighlight="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            android:textColorLink="@color/colorAccent" />
 
         <RadioButton
             android:id="@+id/rb_private"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Private" />
+            android:shadowColor="@color/white"
+            android:text="Private"
+            android:textColor="@color/colorAccent"
+            android:textColorHighlight="@color/colorAccent"
+            android:textColorHint="@color/colorAccent"
+            android:textColorLink="@color/colorAccent" />
     </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>
